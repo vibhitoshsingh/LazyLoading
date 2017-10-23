@@ -1,0 +1,216 @@
+
+
+ <!--<h2>Hello</h2>
+ <form [formGroup]="complex" (ngSubmit)="submitForm(complex.value)"  method="post" enctype="multipart/form-data" action="api/upload">
+   <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+               
+                  <image-upload  (uploadFinished)="onUploadFinished($event)"   
+
+                  [formControl]="complex.controls['file']" [(ngModel)]="file"></image-upload>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input   class="form-control" type="text" [(ngModel)]="suraj" placeholder="Email" formControlName="Email" ><br>
+                    <p>{{suraj}}</p>
+                     <input class="form-control" type="date" placeholder=" DOB"  formControlName="DOB"><br><br>
+                     <button class="btn btn-primary submit" type="submit">Submit</button>
+                     <br>
+                     <br>
+                     <br>
+                     <button type="button"  class="btn btn-warning" (click)="showImage(tempDelete)"> show Image</button> 
+                </div>
+            </div>
+           
+        </div>
+        <span class="glyphicon" [class.glyphicon-star]="true"></span>
+ </form>
+ 
+ <template #tempDelete>
+<img id="emimage" src="{{image}}" height="100" width="100"/> </template>-->
+ <div class="container">
+       <button type="button" class="btn btn-info" (click)="openModal(template);reFresh()">Add Person</button>
+       <!--<button type="button" class="btn btn-info" routerLink="/registration"> Register</button>-->
+                <table class="table">
+                    <tr>
+                        <th>S.No </th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Email</th> 
+                        <th>Address</th>
+                        <th>MaritalStatus</th>
+                        <th>State</th>                        
+                        <th>City</th>
+                        <th>Action</th>
+
+                    </tr>
+                    <tr *ngFor="let information of info; let i = index" >
+                        <td>{{i+1}}</td>
+                        <td>{{information.name}}</td>
+                        <td>{{information.phone}}</td>
+                        <td>{{information.email}}</td>
+                        <td>{{information.address}}</td>
+                        <td *ngIf="information.MaritalStatus; then check else uncheck"> </td>
+                        <ng-template #check>    <input class="form-check-input"   type="checkbox" checked disabled>Married </ng-template> 
+                        <ng-template #uncheck>   <input class="form-check-input" type="checkbox"  disabled> Unmarried</ng-template>
+                        <td>{{information.state}}</td>
+                        <td>{{information.city}}</td>
+                        <td><button class="btn btn-warning btn-sm" type="button" (click)="edit(tempEdit, information)"> Edit </button>
+                         <button class="btn btn-danger btn-sm" type="button" (click)="delete(tempDelete, information)"> Delete</button> </td>
+                     
+                    </tr>
+                </table>
+                     <a routerLink="/login" class="nav-link">   <button type="button" class="btn btn-outline-warning"> click me</button>  </a>
+ 
+            </div>
+
+    
+
+  <ng-template #tempEdit>
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Edit</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                           <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+    
+    <form [formGroup]="complexForm" (ngSubmit)="submitFormForEdit(complexForm.value)">
+    
+    <div class="adddata">      
+    <div class="container">
+     
+            <div class="formPart">
+                <div class="form-group">
+                   <input style="display:none;" class="form-control" type="text"  [(ngModel)]="UserInfo.Id"  [formControl]="complexForm.controls['Id']">
+                    <input class="form-control" type="text"  [(ngModel)]="UserInfo.name"  [formControl]="complexForm.controls['Name']">
+                </div>
+                <div class="form-group">
+                    <input   class="form-control" type="text" [(ngModel)]="UserInfo.phone" [formControl]="complexForm.controls['Phone']">
+                </div>
+                <div class="form-group">
+                    <input   class="form-control" type="text" [(ngModel)]="UserInfo.email" [formControl]="complexForm.controls['Email']">
+                </div>
+                <div class="form-group">
+                    <input   class="form-control" type="text" [(ngModel)]="UserInfo.address" [formControl]="complexForm.controls['Address']">
+                </div>
+         
+       
+
+         
+                <div class="form-group">
+                    <input    class="form-control" type="text" [(ngModel)]="UserInfo.state" [formControl]="complexForm.controls['State']">
+                </div>
+          
+
+           
+                <div class="form-group">
+                    <input  class="form-control" type="email" [(ngModel)]="UserInfo.city" [formControl]="complexForm.controls['City']">
+                </div>
+         
+    </div>
+        <div class="submitbtn">
+            <button class="btn btn-primary submit" [disabled]="!complexForm.valid" (click)="modalRef.hide()">Submit</button>
+        </div>
+        
+    </div>
+    </div>
+    </form>
+</ng-template>
+
+<ng-template #tempDelete>
+<div class="modal-header">
+            <h4 class="modal-title pull-left">Remove </h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+       </button>
+        </div>
+  <form [formGroup]="complexForm" (ngSubmit)="deleteUser(complexForm.value)">
+        
+        <div class="modal-body">
+            Are you sure you want to remove this ?
+            <textarea cols="20" rows="20" style="display:none;"[(ngModel)]="UserInfo.id" [formControl]="complexForm.controls['Id']"></textarea>
+        </div>
+        <div class="submitbtn">
+            <button class="btn btn-primary delete" (click)="modalRef.hide()">Remove</button>
+           
+        </div>
+    </form>
+</ng-template>
+  <ng-template #template>
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Add Person</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                           <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+    
+    <form [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
+    
+    <div class="adddata">      
+    <div class="container">
+      <div class="formPart">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input class="form-control" type="text" placeholder=" Name" [formControl]="complexForm.controls['Name']">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input   class="form-control" type="text" placeholder="Phone" [formControl]="complexForm.controls['Phone']">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input   class="form-control" type="text" placeholder="Email" [formControl]="complexForm.controls['Email']">
+
+                </div>
+            </div>
+             <div class="col-md-6">
+                <div class="form-group">
+                       <label class="form-check-label">
+                           <input type="checkbox" class="form-check-input"  [formControl]="complexForm.controls['MaritalStatus']">
+                          Marital Status
+                       </label>
+                </div>
+            </div>
+
+           
+        </div>
+
+         <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input    class="form-control" type="text" placeholder="State" [formControl]="complexForm.controls['State']">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input  class="form-control" type="email" placeholder="City" [formControl]="complexForm.controls['City']">
+                </div>
+            </div>
+        </div>
+         
+             <div >
+                <div class="form-group">
+                    <input   class="form-control" type="text" placeholder="Address" [formControl]="complexForm.controls['Address']">
+                </div>
+            </div>
+    </div>
+    </div>
+        <div class="submitbtn">
+            <button class="btn btn-primary submit"  [disabled]="!complexForm.valid" (click)="modalRef.hide()">Submit</button>
+        </div>
+        
+    </div>
+
+    </form>
+</ng-template>

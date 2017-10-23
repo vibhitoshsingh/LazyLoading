@@ -1,0 +1,41 @@
+<!--<br>
+<br>
+<br>
+<div class="container">
+    <form class="form" >
+        <div class="row" >
+            <div class="col-md-6">
+                <div class="form-group">-->
+                    <!--<input type="text" class="form-control" >-->
+                        <!--<input class="form-control" type="text" placeholder=" Name" >
+                            <input class="form-control" type="password" placeholder=" Password" >-->
+                   
+                    <!--<input type="text" class="form-control">-->
+                <!--</div>
+            </div>
+        </div>-->
+        <!--<button type="submit" class="btn btn-primary"> Submit</button>-->
+           <!--<button type="button" class="btn btn-info" routerLink="crud"> Submit</button>-->
+           
+    <!--</form>
+</div>-->
+
+<!--<form [formGroup]="loginForm" (submit)="saveUser()">-->
+    <div class="container">
+    <form class="form">
+  <h2>Login </h2>
+ <div class="col-md-6">
+                <div class="form-group">
+  <label for="username">username</label>
+  <input formControlName="username" id="username" />
+  <!--<app-validationmessage [control]="loginForm.controls.username"></app-validationmessage>-->
+
+ <label for="password">Password</label>
+  <input type="password" formControlName="password" id="password" />
+  <!--<app-validationmessage [control]="loginForm.controls.password"></app-validationmessage>-->
+                </div></div>
+  <button type="submit" class="btn btn-primary" >Login</button>
+  Are you new! ? <a routerLink="/registration"> Get started here</a>
+    <!--Are you new! ? <a [routerLink]="['/crud']"> Get started here</a>-->
+</form>
+    </div>
